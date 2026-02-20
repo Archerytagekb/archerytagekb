@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archery Tag | Заказать игру</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* Шапка */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #e74c3c, #2980b9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #e74c3c;
+        }
+
+        .nav-links a.active {
+            color: #e74c3c;
+            border-bottom: 2px solid #e74c3c;
+        }
+
+        /* Основной контент */
+        .main {
+            margin-top: 80px;
+        }
+
+        /* Hero секция */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 100px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "🏹";
+            font-size: 300px;
+            position: absolute;
+            left: -50px;
+            bottom: -50px;
+            opacity: 0.1;
+            transform: rotate(-15deg);
+        }
+
+        .hero::after {
+            content: "🎯";
+            font-size: 300px;
+            position: absolute;
+            right: -50px;
+            top: -50px;
+            opacity: 0.1;
+            transform: rotate(15deg);
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #e74c3c;
+            color: white;
+            box-shadow: 0 5px 20px rgba(231, 76, 60, 0.4);
+        }
+
+        .btn-primary:hover {
+            background: #c0392b;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(231, 76, 60, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #764ba2;
+            transform: translateY(-3px);
+        }
+
+        /* Секция с преимуществами */
+        .features {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 30px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .section-title p {
+            color: #666;
+            font-size: 1.2em;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5em;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Секция с ценами */
+        .pricing {
+            background: #f8f9fa;
+            padding: 80px 30px;
+        }
+
+        .pricing-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card.popular::before {
+            content: "ХИТ";
+            position: absolute;
+            top: 20px;
+            right: -35px;
+            background: #e74c3c;
+            color: white;
+            padding: 10px 40px;
+            transform: rotate(45deg);
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .pricing-header {
+            margin-bottom: 30px;
+        }
+
+        .pricing-header h3 {
+            font-size: 1.8em;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 3em;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 10px;
+        }
+
+        .price span {
+            font-size: 0.4em;
+            color: #666;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .pricing-features li {
+            padding: 10px 0;
+            color: #666;
+            border-bottom: 1px solid #eee;
+        }
+
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+
+        .pricing-features i {
+            color: #27ae60;
+            margin-right: 10px;
+        }
+
+        /* Форма заказа */
+        .order-form {
+            max-width: 800px;
+            margin: 80px auto;
+            padding: 0 30px;
+        }
+
+        .form-container {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+
+        .form-container h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e1e1;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #e74c3c;
+            box-shadow: 0 0 10px rgba(231, 76, 60, 0.2);
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(231, 76, 60, 0.4);
+        }
+
+        /* Отзывы */
+        .testimonials {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 80px 30px;
+            color: white;
+        }
+
+        .testimonials .section-title h2 {
+            color: white;
+        }
+
+        .testimonials .section-title p {
+            color: rgba(255,255,255,0.9);
+        }
+
+        .testimonials-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .testimonial-text {
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #e74c3c, #f39c12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .author-info h4 {
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .author-info p {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        /* Футер */
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 60px 30px 30px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            color: #e74c3c;
+        }
+
+        .footer-section p {
+            line-height: 1.8;
+            opacity: 0.8;
+            margin-bottom: 10px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            background: #e74c3c;
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            opacity: 0.6;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero h1 {
+                font-size: 2.5em;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-container {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <a href="#" class="logo">🏹 Archery Tag</a>
+            <div class="nav-links">
+                <a href="#home" class="active">Главная</a>
+                <a href="#features">Преимущества</a>
+                <a href="#pricing">Цены</a>
+                <a href="#order">Заказать</a>
+                <a href="#reviews">Отзывы</a>
+                <a href="#contacts">Контакты</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main">
+        <!-- Hero секция -->
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1>Archery Tag</h1>
+                <p>Захватывающая игра в лучный бой для корпоративов, дней рождения и тимбилдингов! Безопасно, весело, незабываемо!</p>
+                <div class="hero-buttons">
+                    <a href="#order" class="btn btn-primary">Заказать игру</a>
+                    <a href="#features" class="btn btn-secondary">Узнать больше</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Преимущества -->
+        <section id="features" class="features">
+            <div class="section-title">
+                <h2>Почему выбирают нас?</h2>
+                <p>Все, что нужно для идеального мероприятия</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Полная безопасность</h3>
+                    <p>Специальное снаряжение и мягкие наконечники стрел обеспечивают безопасность всех участников</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Профессиональное оборудование</h3>
+                    <p>Сертифицированные луки, стрелы и защитные маски от ведущих производителей</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h3>Опытные инструкторы</h3>
+                    <p>Профессиональные ведущие проведут инструктаж и будут следить за ходом игры</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📸</div>
+                    <h3>Фото и видео съемка</h3>
+                    <p>Запечатлим яркие моменты вашей игры профессиональным фотографом</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎉</div>
+                    <h3>Любые мероприятия</h3>
+                    <p>Дни рождения, корпоративы, тимбилдинги, выпускные и другие праздники</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🚐</div>
+                    <h3>Выезд в любую точку</h3>
+                    <p>Приедем к вам в офис, парк или арендуем площадку для мероприятия</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Цены -->
+        <section id="pricing" class="pricing">
+            <div class="pricing-container">
+                <div class="section-title">
+                    <h2>Тарифы и цены</h2>
+                    <p>Выберите подходящий пакет для вашего мероприятия</p>
+                </div>
+                <div class="pricing-grid">
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h3>Старт</h3>
+                            <div class="price">15 000 <span>₽</span></div>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><i>✓</i> 1 час игры</li>
+                            <li><i>✓</i> До 10 участников</li>
+                            <li><i>✓</i> Базовое оборудование</li>
+                            <li><i>✓</i> Инструктор</li>
+                            <li><i>✗</i> Фотосъемка</li>
+                            <li><i>✗</i> Фуршетная зона</li>
+                        </ul>
+                        <a href="#order" class="btn btn-primary" style="width: 100%;">Выбрать</a>
+                    </div>
+                    <div class="pricing-card popular">
+                        <div class="pricing-header">
+                            <h3>Оптимальный</h3>
+                            <div class="price">25 000 <span>₽</span></div>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><i>✓</i> 2 часа игры</li>
+                            <li><i>✓</i> До 20 участников</li>
+                            <li><i>✓</i> Профессиональное оборудование</li>
+                            <li><i>✓</i> 2 инструктора</li>
+                            <li><i>✓</i> Фотосъемка</li>
+                            <li><i>✗</i> Фуршетная зона</li>
+                        </ul>
+                        <a href="#order" class="btn btn-primary" style="width: 100%;">Выбрать</a>
+                    </div>
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h3>Премиум</h3>
+                            <div class="price">40 000 <span>₽</span></div>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><i>✓</i> 3 часа игры</li>
+                            <li><i>✓</i> До 30 участников</li>
+                            <li><i>✓</i> Элитное оборудование</li>
+                            <li><i>✓</i> 3 инструктора</li>
+                            <li><i>✓</i> Профессиональная съемка</li>
+                            <li><i>✓</i> Фуршетная зона + напитки</li>
+                        </ul>
+                        <a href="#order" class="btn btn-primary" style="width: 100%;">Выбрать</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Форма заказа -->
+        <section id="order" class="order-form">
+            <div class="form-container">
+                <h2>Заказать игру</h2>
+                <form id="orderForm" onsubmit="submitOrder(event)">
+                    <div class="form-group">
+                        <label for="name">Ваше имя *</label>
+                        <input type="text" id="name" required placeholder="Иван Иванов">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">Телефон *</label>
+                            <input type="tel" id="phone" required placeholder="+7 (999) 999-99-99">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" required placeholder="ivan@example.com">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="date">Дата мероприятия *</label>
+                            <input type="date" id="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="time">Время</label>
+                            <input type="time" id="time">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="participants">Количество участников</label>
+                            <input type="number" id="participants" min="1" max="50" value="10">
+                        </div>
+                        <div class="form-group">
+                            <label for="tariff">Выберите тариф</label>
+                            <select id="tariff">
+                                <option value="start">Старт - 15 000 ₽</option>
+                                <option value="optimal" selected>Оптимальный - 25 000 ₽</option>
+                                <option value="premium">Премиум - 40 000 ₽</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="address">Адрес проведения</label>
+                        <input type="text" id="address" placeholder="г. Москва, ул. Примерная, д. 1">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="comment">Дополнительные пожелания</label>
+                        <textarea id="comment" placeholder="Опишите особые пожелания..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn-submit">Забронировать игру</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Отзывы -->
+        <section id="reviews" class="testimonials">
+            <div class="section-title">
+                <h2>Отзывы наших клиентов</h2>
+                <p>Более 500 проведенных игр и тысячи довольных участников</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "Заказывали игру на корпоратив. Все сотрудники в восторге! Отличная команда профессионалов, все четко и безопасно. Обязательно повторим!"
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">А</div>
+                        <div class="author-info">
+                            <h4>Алексей Смирнов</h4>
+                            <p>Директор ООО "ТехноПром"</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "Проводили день рождения сына (10 лет). Дети были просто счастливы! Инструкторы отлично справились с детской аудиторией. Спасибо большое!"
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">Е</div>
+                        <div class="author-info">
+                            <h4>Елена Петрова</h4>
+                            <p>Мама именинника</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "Лучший тимбилдинг, который у нас был! Команда сплотилась, получили море эмоций. Отдельное спасибо за фото - теперь есть что вспомнить!"
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">М</div>
+                        <div class="author-info">
+                            <h4>Михаил Иванов</h4>
+                            <p>HR-директор</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Контакты в футере -->
+        <footer id="contacts" class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Archery Tag</h3>
+                    <p>Организация захватывающих игр в лучный бой для любых мероприятий. Безопасно, весело, профессионально!</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">📱</a>
+                        <a href="#" class="social-link">📘</a>
+                        <a href="#" class="social-link">📷</a>
+                        <a href="#" class="social-link">▶</a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Контакты</h3>
+                    <p>📞 +7 (999) 123-45-67</p>
+                    <p>✉️ info@archerytag.ru</p>
+                    <p>📍 г. Москва, ул. Спортивная, 15</p>
+                    <p>⏰ Ежедневно с 10:00 до 22:00</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Информация</h3>
+                    <p>О компании</p>
+                    <p>Вопросы и ответы</p>
+                    <p>Политика конфиденциальности</p>
+                    <p>Договор оферты</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Мы принимаем</h3>
+                    <p>💳 Visa / Mastercard</p>
+                    <p>💰 Наличные</p>
+                    <p>🏢 Безналичный расчет</p>
+                    <p>⭐ Оплата для юр. лиц</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Archery Tag. Все права защищены.</p>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        // Плавная прокрутка к разделам
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#home') {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    const targetSection = document.querySelector(targetId);
+                    if (targetSection) {
+                        targetSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+                
+                // Обновление активной ссылки
+                document.querySelectorAll('.nav-links a').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Обработка отправки формы
+        function submitOrder(event) {
+            event.preventDefault();
+            
+            // Здесь можно добавить отправку данных на сервер
+            const formData = {
+                name: document.getElementById('name').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value,
+                date: document.getElementById('date').value,
+                time: document.getElementById('time').value,
+                participants: document.getElementById('participants').value,
+                tariff: document.getElementById('tariff').value,
+                address: document.getElementById('address').value,
+                comment: document.getElementById('comment').value
+            };
+            
+            console.log('Заказ отправлен:', formData);
+            
+            // Показываем сообщение об успехе
+            alert('Спасибо за заказ! Наш менеджер свяжется с вами в ближайшее время.');
+            
+            // Очищаем форму
+            event.target.reset();
+        }
+
+        // Подсветка активного пункта меню при прокрутке
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const scrollPosition = window.scrollY + 100;
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionBottom = sectionTop + section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                    document.querySelectorAll('.nav-links a').forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${sectionId}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        });
+
+        // Установка минимальной даты (сегодняшний день)
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('date').setAttribute('min', today);
+    </script>
+</body>
+</html>
