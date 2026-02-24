@@ -506,7 +506,7 @@ VK.Widgets.Group("vk_groups", {mode: 4, wide: 1, no_cover: 1, width: "400", heig
             <div class="pricing-grid">
                 <div class="price-card">
                     <h3>Разовое посещение</h3>
-                    <div class="price">1 200 ₽</div>
+                    <div class="price">1 500 ₽</div>
                     <p class="price-period">за человека</p>
                     <ul style="text-align: left; margin: 20px 0; list-style: none;">
                         <li style="margin-bottom: 10px; padding-left: 25px; position: relative;">✓ 1.5 часа игры</li>
@@ -520,13 +520,13 @@ VK.Widgets.Group("vk_groups", {mode: 4, wide: 1, no_cover: 1, width: "400", heig
                 <div class="price-card popular">
                     <div class="popular-tag">Популярно</div>
                     <h3>Командный пакет</h3>
-                    <div class="price">8 000 ₽</div>
+                    <div class="price">10 000 ₽</div>
                     <p class="price-period">до 10 человек</p>
                     <ul style="text-align: left; margin: 20px 0; list-style: none;">
                         <li style="margin-bottom: 10px; padding-left: 25px; position: relative;">✓ 2 часа игры</li>
                         <li style="margin-bottom: 10px; padding-left: 25px; position: relative;">✓ Фотосъемка</li>
                         <li style="margin-bottom: 10px; padding-left: 25px; position: relative;">✓ 5 сценариев игры</li>
-                        <li style="margin-bottom: 10px; padding-left: 25px; position: relative;">✓ Комната отдыха</li>
+                        
                     </ul>
                     <a href="#contact" class="cta-button" style="padding: 12px 30px; font-size: 1em;">Выбрать</a>
                 </div>
@@ -537,9 +537,9 @@ VK.Widgets.Group("vk_groups", {mode: 4, wide: 1, no_cover: 1, width: "400", heig
                     <p class="price-period">до 20 человек</p>
                     <ul style="text-align: left; margin: 20px 0; list-style: none;">
                         <li style="margin-bottom: 10px; padding-left: 25px; position: relative;">✓ 3 часа игры</li>
-                        <li style="margin-bottom: 10px; padding-left: 25px; position: relative;">✓ Видеосъемка</li>
+                        <li style="margin-bottom: 10px; padding-left: 25px; position: relative;">✓ Фотосъемка</li>
                         <li style="margin-bottom: 10px; padding-left: 25px; position: relative;">✓ Все сценарии</li>
-                        <li style="margin-bottom: 10px; padding-left: 25px; position: relative;">✓ Кейтеринг</li>
+                        
                     </ul>
                     <a href="#contact" class="cta-button" style="padding: 12px 30px; font-size: 1em;">Выбрать</a>
                 </div>
@@ -570,21 +570,28 @@ VK.Widgets.Group("vk_groups", {mode: 4, wide: 1, no_cover: 1, width: "400", heig
     </section>
 
     <!-- Контакты -->
-    <section class="section" id="contact">
-        <div class="container">
-            <h2 class="section-title">Забронировать игру</h2>
-            <div class="contact-content">
-                <div>
-                    <h3 style="font-size: 1.8em; margin-bottom: 30px; color: #2c3e50;">Оставьте заявку</h3>
-                    <form class="contact-form" id="bookingForm">
-                        <input type="text" placeholder="Ваше имя" required>
-                        <input type="tel" placeholder="Телефон" required>
-                        <input type="email" placeholder="Email">
-                        <input type="number" placeholder="Количество человек" min="2" max="50" required>
-                        <input type="date" required>
-                        <textarea placeholder="Дополнительная информация"></textarea>
-                        <button type="submit" class="cta-button" style="width: 100%; padding: 15px; font-size: 1.1em;">Отправить заявку</button>
-                    </form>
+<section class="section" id="contact">
+    <div class="container">
+        <h2 class="section-title">Забронировать игру</h2>
+        <div class="contact-content">
+            <div>
+                <h3 style="font-size: 1.8em; margin-bottom: 30px; color: #2c3e50;">Оставьте заявку</h3>
+                <!-- ИСПРАВЛЕННАЯ ФОРМА -->
+                <form class="contact-form" id="bookingForm" action="https://formsubmit.co/ВАША_ПОЧТА@mail.ru" method="POST">
+                    <!-- Скрытые поля для FormSubmit -->
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_next" value="https://ваш-сайт.ru/spasibo.html">
+                    <input type="hidden" name="_subject" value="Новая заявка Archery Tag!">
+                    
+                    <!-- Поля формы с name атрибутами -->
+                    <input type="text" name="name" placeholder="Ваше имя" required>
+                    <input type="tel" name="phone" placeholder="Телефон" required>
+                    <input type="email" name="email" placeholder="Email">
+                    <input type="number" name="persons" placeholder="Количество человек" min="2" max="50" required>
+                    <input type="date" name="date" required>
+                    <textarea name="message" placeholder="Дополнительная информация"></textarea>
+                    <button type="submit" class="cta-button" style="width: 100%; padding: 15px; font-size: 1.1em;">Отправить заявку</button>
+                </form>
                 </div>
                 <div class="contact-info">
                     <h3 style="font-size: 1.8em; margin-bottom: 30px; color: #2c3e50;">Контакты</h3>
@@ -678,11 +685,7 @@ VK.Widgets.Group("vk_groups", {mode: 4, wide: 1, no_cover: 1, width: "400", heig
             });
         });
 
-        // Обработка формы
-        document.getElementById('bookingForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            document.getElementById('successModal').style.display = 'flex';
-        });
+
 
         // Закрытие модального окна
         function closeModal() {
